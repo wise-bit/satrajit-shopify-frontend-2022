@@ -1,2 +1,2 @@
-# shopify-frontend-challenge
-Shopify Frontend Challenge
+# Shopify Frontend Challenge
+<!-- Shopify Frontend Challenge -->
