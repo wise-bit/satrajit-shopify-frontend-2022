@@ -3,6 +3,7 @@ import { Link, TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Response from './Response';
+import { useMediaQuery } from 'react-responsive';
 
 export default function Prompt() {
   const [showEmptyError, setShowEmptyError] = useState(false);
@@ -12,6 +13,9 @@ export default function Prompt() {
     const initialHistory = JSON.parse(savedHistory);
     return initialHistory || [];
   });
+
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+  console.log(isMobile);
 
   useEffect(() => {
     localStorage.setItem('gpt3searchhistory', JSON.stringify(searchHistory));
@@ -80,6 +84,7 @@ export default function Prompt() {
           alignItems: 'center',
           width: '100%',
           justifyContent: 'center',
+          padding: '10px',
         }}
       >
         <Box>
@@ -111,7 +116,9 @@ export default function Prompt() {
           <div style={{ fontStyle: 'italic', marginTop: '25px' }}>
             Please wait 2 seconds for GPT-3 to process after pressing search
           </div>
-          <div style={{ marginTop: '15px', width: '500px' }}>
+          <div
+            style={{ marginTop: '15px', width: isMobile ? 'auto' : '500px' }}
+          >
             <TextField
               id='outlined-multiline-static'
               label='Input prompt for AI'
