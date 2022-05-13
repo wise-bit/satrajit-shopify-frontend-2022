@@ -105,10 +105,9 @@ export default function Prompt() {
           alignItems: 'center',
           width: '100%',
           justifyContent: 'center',
-          padding: '10px',
         }}
       >
-        <Box>
+        <Box style={{ width: isMobile ? '100%' : '500px', padding: '10px' }}>
           <div style={{ fontSize: '36px', marginTop: '80px' }}>
             Lullaby with AI (and more)
           </div>
@@ -137,9 +136,7 @@ export default function Prompt() {
           <div style={{ fontStyle: 'italic', marginTop: '25px' }}>
             Please wait 2 seconds for GPT-3 to process after pressing search
           </div>
-          <div
-            style={{ marginTop: '15px', width: isMobile ? '100%' : '500px' }}
-          >
+          <div style={{ marginTop: '15px' }}>
             <TextField
               id='outlined-multiline-static'
               label='Input prompt for AI'
@@ -173,10 +170,12 @@ export default function Prompt() {
                   label='Engine'
                   onChange={switchEngine}
                 >
-                  <MenuItem value={'text-curie-001'}>Curie</MenuItem>
-                  <MenuItem value={'text-ada-001'}>Ada</MenuItem>
+                  <MenuItem value={'text-curie-001'}>Curie (Default)</MenuItem>
+                  <MenuItem value={'text-ada-001'}>Ada (Fastest)</MenuItem>
                   <MenuItem value={'text-babbage-001'}>Babbage</MenuItem>
-                  <MenuItem value={'text-davinci-002'}>DaVinci</MenuItem>
+                  <MenuItem value={'text-davinci-002'}>
+                    DaVinci (Strongest)
+                  </MenuItem>
                 </Select>
               </FormControl>
 
