@@ -15,7 +15,7 @@ export default function Response({ items }) {
                 paddingRight: '10px',
                 border: 'solid 2px #4c7a5d',
                 borderRadius: '4px',
-                marginBottom: '10px',
+                marginBottom: '15px',
               }}
             >
               <div>

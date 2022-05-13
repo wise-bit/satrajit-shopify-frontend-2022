@@ -1,13 +1,39 @@
 import Box from '@mui/material/Box';
-import { Link, TextField } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Link,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Response from './Response';
 import { useMediaQuery } from 'react-responsive';
 
 export default function Prompt() {
+  const SAMPLE_INPUT_TEXTS = [
+    'Write me a haiku about oranges',
+    'Write a poem about a dog wearing skis',
+    'Write me a python program to print hello world',
+    'Write me a go concurrency program',
+    'Can AI take over the world',
+    'How does GPT-3 work',
+    'What is test based development',
+    '',
+  ];
+
+  const AVAILABLE_ENGINES = [
+    'text-curie-001',
+    'text-ada-001',
+    'text-babbage-001',
+    'text-davinci-002',
+  ];
+
   const [showEmptyError, setShowEmptyError] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [engineDropdown, setEngineDropdown] = useState(AVAILABLE_ENGINES[0]);
   const [searchHistory, setSearchHistory] = useState(() => {
     const savedHistory = localStorage.getItem('gpt3searchhistory');
     const initialHistory = JSON.parse(savedHistory);
@@ -25,19 +51,14 @@ export default function Prompt() {
     setSearchHistory([]);
   };
 
-  const sampleInputTexts = [
-    'Write me a haiku about oranges',
-    'Write a poem about a dog wearing skis',
-    'Write me a python program to print hello world',
-    'Write me a go concurrency program',
-    'Can AI take over the world',
-    'How does GPT-3 work',
-  ];
-
   const fillSuggestedText = () => {
     setSearchText(
-      sampleInputTexts[Math.floor(Math.random() * sampleInputTexts.length)]
+      SAMPLE_INPUT_TEXTS[Math.floor(Math.random() * SAMPLE_INPUT_TEXTS.length)]
     );
+  };
+
+  const switchEngine = (event) => {
+    setEngineDropdown(event.target.value);
   };
 
   const search = () => {
@@ -56,7 +77,7 @@ export default function Prompt() {
     };
 
     let resp;
-    fetch('https://api.openai.com/v1/engines/text-curie-001/completions', {
+    fetch(`https://api.openai.com/v1/engines/${engineDropdown}/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -117,7 +138,7 @@ export default function Prompt() {
             Please wait 2 seconds for GPT-3 to process after pressing search
           </div>
           <div
-            style={{ marginTop: '15px', width: isMobile ? 'auto' : '500px' }}
+            style={{ marginTop: '15px', width: isMobile ? '100%' : '500px' }}
           >
             <TextField
               id='outlined-multiline-static'
@@ -138,27 +159,55 @@ export default function Prompt() {
               </div>
             )}
 
-            <div style={{ textAlign: 'right', marginTop: '20px' }}>
-              <Button
-                disableElevation
-                variant='outlined'
-                onClick={() => {
-                  fillSuggestedText();
-                }}
-                style={{ marginRight: '10px' }}
-              >
-                Suggest Text
-              </Button>
+            <div
+              style={{
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'end',
+              }}
+            >
+              <FormControl size='small'>
+                <InputLabel id='select-small'>Engine</InputLabel>
+                <Select
+                  value={engineDropdown}
+                  label='Engine'
+                  onChange={switchEngine}
+                >
+                  <MenuItem value={'text-curie-001'}>Curie</MenuItem>
+                  <MenuItem value={'text-ada-001'}>Ada</MenuItem>
+                  <MenuItem value={'text-babbage-001'}>Babbage</MenuItem>
+                  <MenuItem value={'text-davinci-002'}>DaVinci</MenuItem>
+                </Select>
+              </FormControl>
 
-              <Button
-                disableElevation
-                variant='contained'
-                onClick={() => {
-                  search();
+              <div
+                style={{
+                  textAlign: 'right',
+                  marginTop: '20px',
+                  marginLeft: 'auto',
                 }}
               >
-                Search
-              </Button>
+                <Button
+                  disableElevation
+                  variant='outlined'
+                  onClick={() => {
+                    fillSuggestedText();
+                  }}
+                  style={{ marginRight: '10px' }}
+                >
+                  Suggest Text
+                </Button>
+
+                <Button
+                  disableElevation
+                  variant='contained'
+                  onClick={() => {
+                    search();
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
             </div>
             <div
               style={{
