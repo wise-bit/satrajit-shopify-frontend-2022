@@ -1,8 +1,8 @@
 {
-  "name": "shopify-frontend-challenge",
+  "name": "satrajit-shopify-frontend-2022",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://wise-bit.github.io/shopify-frontend-challenge",
+  "homepage": "https://wise-bit.github.io/satrajit-shopify-frontend-2022",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
